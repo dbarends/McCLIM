@@ -24,7 +24,7 @@
 
 (defun make-clx-render-color (medium design)
   ;; Hmm, XRender uses pre-multiplied alpha, how useful!
-  (alexandria:ensure-gethash design (clx-color-cache (port medium))
+  (ensure-gethash design (clx-color-cache (port medium))
     (multiple-value-bind (r g b a)
         (clime:color-rgba design)
       (vector (round (* r a #xffff))
@@ -163,7 +163,7 @@
 (defgeneric clx-render-picture (medium design)
   (:method :around ((medium clx-render-medium) design)
     (if (cacheable-source-p design)
-        (alexandria:ensure-gethash design (clx-design-cache (port medium))
+        (ensure-gethash design (clx-design-cache (port medium))
           (call-next-method))
         (call-next-method)))
   (:method ((medium clx-render-medium) (design color))
